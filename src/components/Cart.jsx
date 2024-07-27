@@ -3,24 +3,61 @@ import { useSelector } from "react-redux";
 
 function Cart() {
     const [cart, setCart] = useState(true);
+    const [modal, setModal] = useState(false);
     const { ordered, orderTotal, totalPrice } = useSelector(
         (state) => state.orders
     );
+    const modall = () => {
+        setModal(true);
+    };
+
     return (
-        <div className="w-[850px] h-full p-6 box-border rounded-xl   bg-white">
+        <div className="w-[850px] h-full p-6 box-border rounded-xl bg-white">
             <h2 className="text-[#C73B0F] font-bold text-2xl">
-                Your Cart({orderTotal})
+                Your Cart ({orderTotal})
             </h2>
-            {cart && (
+            {orderTotal === 0 ? (
                 <div className="flex justify-center items-center flex-col pt-4 pb-4 mt-6 mb-6">
                     <img
-                        className=" w-32 h-32  "
+                        className="w-32 h-32"
                         src="../public/images/illustration-empty-cart.svg"
-                        alt=""
+                        alt="Empty Cart"
                     />
                     <p className="text-[#87635A]">
                         Your added items will appear here
                     </p>
+                </div>
+            ) : (
+                <div>
+                    {ordered.map((item) => (
+                        <div
+                            key={item.id}
+                            className="flex justify-between items-center mb-4 p-4 border rounded-lg"
+                        >
+                            <img
+                                className="w-16 h-16"
+                                src={item.image}
+                                alt={item.name}
+                            />
+                            <div className="flex-1 ml-4">
+                                <h3 className="text-lg font-semibold">
+                                    {item.name}
+                                </h3>
+                                <p className="text-sm text-gray-600">
+                                    {item.description}
+                                </p>
+                            </div>
+                            <div className="text-right">
+                                <p className="text-lg font-semibold">
+                                    ${item.price}
+                                </p>
+                                <p className="text-sm text-gray-600">
+                                    Quantity: {item.quantity}
+                                </p>
+                                <p>Total: {orderTotal}</p>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             )}
 
@@ -41,7 +78,10 @@ function Cart() {
                     delivery
                 </p>
             </div>
-            <button className=" w-80 font-semibold bg-[#C73B0F] pt-4 pb-4 rounded-[50px] mt-5 text-white">
+            <button
+                onClick={() => modall()}
+                className="w-80 font-semibold bg-[#C73B0F] pt-4 pb-4 rounded-[50px] mt-5 text-white"
+            >
                 Confirm Order
             </button>
         </div>
