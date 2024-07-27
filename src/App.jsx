@@ -1,6 +1,6 @@
 import Cart from "./components/Cart";
 import ProductsList from "./components/ProductsList";
-import Modal from "./components/Modal";
+// import Modal from "./components/Modal";
 
 function App() {
     return (
@@ -10,7 +10,7 @@ function App() {
                 <Cart />
             </div>
             <div className="flex justify-center items-center relative bottom-[1000px] ">
-                <Modal />
+                {/* <Modal /> */}
             </div>
         </div>
     );
